@@ -23,4 +23,9 @@ public class UserController {
         return userService.createNewUser(user);
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public User login(User user) {
+        return userService.login(user.getCredential().getEmail(), user.getCredential().getPassword());
+    }
+
 }

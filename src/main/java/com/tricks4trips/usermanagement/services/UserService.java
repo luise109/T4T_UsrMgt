@@ -25,4 +25,12 @@ public class UserService {
         return null;
     }
 
+    public User login(String email, String password) {
+        Credential credential = credentialService.login(email, password);
+        if (credential != null) {
+            return userRepository.findByCredential_Id(credential.getId());
+        }
+        return null;
+    }
+
 }

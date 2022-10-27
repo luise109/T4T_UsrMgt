@@ -15,6 +15,10 @@ public class CredentialService {
         return credentialRepository.findByEmail(email) == null;
     }
 
+    public Credential login(String email, String password) {
+        return credentialRepository.findByEmailAndPassword(email, password);
+    }
+
     public Credential createNewCredential(Credential credential) {
         if (isEmailAvailable(credential.getEmail())) {
             return credentialRepository.save(credential);

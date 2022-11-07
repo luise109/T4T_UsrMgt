@@ -17,9 +17,26 @@ public class User {
     private Long id;
     private String name;
     private String lastname;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Credential credential;
+    @Column(unique = true)
+    private String email;
+    private String password;
     private String phone;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Long getId() {
         return id;
@@ -43,14 +60,6 @@ public class User {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public Credential getCredential() {
-        return credential;
-    }
-
-    public void setCredential(Credential credential) {
-        this.credential = credential;
     }
 
     public String getPhone() {

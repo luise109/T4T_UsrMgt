@@ -26,7 +26,7 @@ public class UserRestaurantController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public UserRestaurant login(UserRestaurant user) {
-        return userRestaurantService.login(user.getCredential().getEmail(), user.getCredential().getPassword());
+        return userRestaurantService.login(user.getEmail(), user.getPassword());
     }
 
 }

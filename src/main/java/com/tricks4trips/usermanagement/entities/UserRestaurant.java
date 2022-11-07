@@ -17,8 +17,9 @@ public class UserRestaurant {
     private Long id;
     private String name;
     private String rfc;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Credential credential;
+    @Column(unique = true)
+    private String email;
+    private String password;
     private String phone;
     private String address;
     private String zip;
@@ -51,12 +52,20 @@ public class UserRestaurant {
         this.rfc = RFC;
     }
 
-    public Credential getCredential() {
-        return credential;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCredential(Credential credential) {
-        this.credential = credential;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPhone() {

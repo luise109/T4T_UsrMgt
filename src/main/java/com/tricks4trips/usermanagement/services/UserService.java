@@ -22,6 +22,9 @@ public class UserService {
     public User login(String email, String password) {
         if (email != null && password != null) {
             User user = userRepository.findByEmailAndPassword(email, password);
+            if (user == null) {
+                return null;
+            }
             user.setPassword("");
             return user;
         }

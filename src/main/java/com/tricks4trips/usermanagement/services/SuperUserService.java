@@ -19,7 +19,7 @@ public class SuperUserService {
     }
 
     public SuperUser login(String email, String password) {
-        if (email != null || password != null) {
+        if (email != null && password != null) {
             SuperUser superUser = userRepository.findByUsernameAndPassword(email, password);
             superUser.setPassword("");
             return superUser;

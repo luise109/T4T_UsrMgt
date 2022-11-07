@@ -25,7 +25,7 @@ public class UserAgencyController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public UserAgency login(UserAgency user) {
-        return userService.login(user.getCredential().getEmail(), user.getCredential().getPassword());
+        return userService.login(user.getEmail(), user.getPassword());
     }
 
 }

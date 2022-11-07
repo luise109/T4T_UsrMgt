@@ -25,7 +25,7 @@ public class SuperUserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public SuperUser login(SuperUser user) {
-        return userService.login(user.getCredential().getEmail(), user.getCredential().getPassword());
+        return userService.login(user.getUsername(), user.getPassword());
     }
 
 }

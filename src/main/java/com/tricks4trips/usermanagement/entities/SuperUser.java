@@ -17,8 +17,8 @@ public class SuperUser {
     private Long id;
     private String name;
     private String lastname;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Credential credential;
+    private String password;
+    private String username;
 
     public Long getId() {
         return id;
@@ -44,12 +44,19 @@ public class SuperUser {
         this.lastname = lastname;
     }
 
-    public Credential getCredential() {
-        return credential;
+    public String getPassword() {
+        return password;
     }
 
-    public void setCredential(Credential credential) {
-        this.credential = credential;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

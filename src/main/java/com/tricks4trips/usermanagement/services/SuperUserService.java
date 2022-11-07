@@ -1,6 +1,5 @@
 package com.tricks4trips.usermanagement.services;
 
-import com.tricks4trips.usermanagement.entities.Credential;
 import com.tricks4trips.usermanagement.entities.SuperUser;
 import com.tricks4trips.usermanagement.repositories.SuperUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,22 +11,18 @@ public class SuperUserService {
     @Autowired
     private SuperUserRepository userRepository;
 
-    @Autowired
-    private CredentialService credentialService;
-
-
     public SuperUser createNewUser(SuperUser user) {
-        Credential credential = credentialService.createNewCredential(user.getCredential());
-        if (credential != null) {
+        if (userRepository.findByUsername(user.getUsername()) == null) {
             return userRepository.save(user);
         }
         return null;
     }
 
     public SuperUser login(String email, String password) {
-        Credential credential = credentialService.login(email, password);
-        if (credential != null) {
-            return userRepository.findByCredential_Id(credential.getId());
+        if (email != null || password != null) {
+            SuperUser superUser = userRepository.findByUsernameAndPassword(email, password);
+            superUser.setPassword("");
+            return superUser;
         }
         return null;
     }

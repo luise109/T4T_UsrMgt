@@ -29,8 +29,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/modify", method = RequestMethod.PUT)
-    public User modifyUser(String password, String email ,User userModify) {
-        return userService.modifyUser(password, email, userModify);
+    public User modifyUser(String pass, String userEmail ,User userModify) {
+        return userService.modifyUser(pass, userEmail, userModify);
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

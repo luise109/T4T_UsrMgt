@@ -1,5 +1,3 @@
-
-
 package com.tricks4trips.usermanagement.repositories;
 
 import com.tricks4trips.usermanagement.entities.UserAgency;

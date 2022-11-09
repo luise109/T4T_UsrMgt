@@ -28,6 +28,12 @@ public class UserRestaurant {
     public UserRestaurant() {
     }
 
+    public UserRestaurant(String password, String email) {
+        this.password = password;
+        this.email = email;
+    }
+
+
     public Long getId() {
         return id;
     }

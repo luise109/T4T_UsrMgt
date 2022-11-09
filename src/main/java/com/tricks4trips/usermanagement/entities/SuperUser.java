@@ -20,6 +20,15 @@ public class SuperUser {
     private String password;
     private String username;
 
+    public SuperUser(String password, String username) {
+        this.password = password;
+        this.username = username;
+    }
+
+    public SuperUser() {
+
+    }
+
     public Long getId() {
         return id;
     }

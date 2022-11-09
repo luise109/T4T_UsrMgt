@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/userRestaurant")
-@CrossOrigin(origins = "*", methods = {RequestMethod.DELETE, RequestMethod.GET},allowedHeaders = "*")
+@CrossOrigin(origins = "*", methods = {RequestMethod.DELETE, RequestMethod.GET,RequestMethod.PUT,RequestMethod.POST},allowedHeaders = "*")
 public class UserRestaurantController {
 
     private final UserRestaurantService userRestaurantService;
@@ -27,6 +27,16 @@ public class UserRestaurantController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public UserRestaurant login(UserRestaurant user) {
         return userRestaurantService.login(user.getEmail(), user.getPassword());
+    }
+
+    @RequestMapping(value = "/modify", method = RequestMethod.PUT)
+    public UserRestaurant modifyUser(String pass, String userEmail, UserRestaurant userModify) {
+        return userRestaurantService.modifyUser(pass, userEmail, userModify);
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public UserRestaurant deleteUser(String password, String email) {
+        return userRestaurantService.deleteUser(password, email);
     }
 
 }

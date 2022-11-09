@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 lib
+userManagement.iml
 
 ### STS ###
 .apt_generated

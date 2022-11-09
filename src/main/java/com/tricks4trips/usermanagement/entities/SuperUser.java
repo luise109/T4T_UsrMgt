@@ -6,10 +6,10 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Users")
+@Table(name="SuperUsers")
 @Getter
 @Setter
-public class User {
+public class SuperUser {
 
     @Id
     @Column(name="id")
@@ -17,34 +17,17 @@ public class User {
     private Long id;
     private String name;
     private String lastname;
-    @Column(unique = true)
-    private String email;
     private String password;
-    private String phone;
+    private String username;
 
-    public User(String password, String email) {
-    }
-
-    public User() {
-
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+    public SuperUser(String password, String username) {
         this.password = password;
+        this.username = username;
     }
 
+    public SuperUser() {
+
+    }
 
     public Long getId() {
         return id;
@@ -70,11 +53,19 @@ public class User {
         this.lastname = lastname;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

@@ -30,4 +30,37 @@ public class SuperUserService {
         return null;
     }
 
+    public SuperUser modifyUser(String password, String username ,SuperUser userModify) {
+        SuperUser user = userRepository.findByUsernameAndPassword(username, password);
+        if (user != null) {
+            userModify.setId(user.getId());
+            if (userModify.getPassword() == null) {
+                userModify.setPassword(user.getPassword());
+            }
+            if(userModify.getUsername() == null){
+                userModify.setUsername(user.getUsername());
+            }
+            if(userModify.getName() == null){
+                userModify.setName(user.getName());
+            }
+            if(userModify.getLastname() == null){
+                userModify.setLastname(user.getLastname());
+            }
+            userRepository.save(userModify);
+            userModify.setPassword("");
+            return userModify;
+        }
+        return null;
+    }
+
+    public SuperUser deleteUser(String username, String password) {
+        SuperUser user = userRepository.findByUsernameAndPassword(username, password);
+        if (user != null) {
+            userRepository.delete(user);
+            user = new SuperUser(password, username);
+            return user;
+        }
+        return null;
+    }
+
 }

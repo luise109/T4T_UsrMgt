@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/SUuser")
-@CrossOrigin(origins = "*", methods = {RequestMethod.DELETE,RequestMethod.GET},allowedHeaders = "*")
+@CrossOrigin(origins = "*", methods = {RequestMethod.DELETE,RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT},allowedHeaders = "*")
 public class SuperUserController {
 
     private final SuperUserService userService;
@@ -27,5 +27,16 @@ public class SuperUserController {
     public SuperUser login(SuperUser user) {
         return userService.login(user.getUsername(), user.getPassword());
     }
+
+    @RequestMapping(value = "/modify", method = RequestMethod.PUT)
+    public SuperUser modifyUser(String password, String username ,SuperUser userModify) {
+        return userService.modifyUser(password, username, userModify);
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public SuperUser deleteUser(String username, String password) {
+        return userService.deleteUser(username, password);
+    }
+
 
 }

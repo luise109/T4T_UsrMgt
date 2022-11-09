@@ -6,28 +6,31 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Agencies")
+@Table(name="Restaurant")
 @Getter
 @Setter
-public class UserAgency {
+public class UserRestaurant {
 
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String phone;
-    private String address;
     private String rfc;
-    private String webPage;
-    private String zip;
     @Column(unique = true)
     private String email;
     private String password;
+    private String phone;
+    private String address;
+    private String zip;
+    private String webPage;
 
+    public UserRestaurant() {
+    }
 
-
-    public UserAgency() {
+    public UserRestaurant(String password, String email) {
+        this.password = password;
+        this.email = email;
     }
 
     public UserAgency(String password, String email) {
@@ -49,6 +52,14 @@ public class UserAgency {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRfc() {
+        return rfc;
+    }
+
+    public void setRfc(String RFC) {
+        this.rfc = RFC;
     }
 
     public String getEmail() {
@@ -83,12 +94,12 @@ public class UserAgency {
         this.address = address;
     }
 
-    public String getRfc() {
-        return rfc;
+    public String getZip() {
+        return zip;
     }
 
-    public void setRfc(String rfc) {
-        this.rfc = rfc;
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 
     public String getWebPage() {
@@ -97,13 +108,5 @@ public class UserAgency {
 
     public void setWebPage(String webPage) {
         this.webPage = webPage;
-    }
-
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
     }
 }

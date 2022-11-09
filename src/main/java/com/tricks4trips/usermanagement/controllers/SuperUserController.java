@@ -29,8 +29,8 @@ public class SuperUserController {
     }
 
     @RequestMapping(value = "/modify", method = RequestMethod.PUT)
-    public SuperUser modifyUser(String password, String username ,SuperUser userModify) {
-        return userService.modifyUser(password, username, userModify);
+    public SuperUser modifyUser(String pass, String userUsername ,SuperUser userModify) {
+        return userService.modifyUser(pass, userUsername, userModify);
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

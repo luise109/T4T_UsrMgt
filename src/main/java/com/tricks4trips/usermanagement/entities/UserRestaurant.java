@@ -28,6 +28,9 @@ public class UserRestaurant {
     public UserRestaurant() {
     }
 
+    public UserRestaurant(String password, String email) {
+    }
+
     public Long getId() {
         return id;
     }

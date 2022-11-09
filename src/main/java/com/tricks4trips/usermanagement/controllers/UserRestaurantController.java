@@ -35,8 +35,8 @@ public class UserRestaurantController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public UserRestaurant deleteUser(String pass, String userEmail) {
-        return userRestaurantService.deleteUser(pass, userEmail);
+    public UserRestaurant deleteUser(String password, String email) {
+        return userRestaurantService.deleteUser(password, email);
     }
 
 }

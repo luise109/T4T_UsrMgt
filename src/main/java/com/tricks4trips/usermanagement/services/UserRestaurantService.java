@@ -69,7 +69,7 @@ public class UserRestaurantService {
         return null;
     }
 
-    public UserRestaurant deleteUser(String email, String password) {
+    public UserRestaurant deleteUser(String password, String email) {
         UserRestaurant user = userRepository.findByEmailAndPassword(email, password);
         if (user != null) {
             userRepository.delete(user);

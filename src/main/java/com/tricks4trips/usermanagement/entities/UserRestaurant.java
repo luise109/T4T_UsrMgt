@@ -29,6 +29,8 @@ public class UserRestaurant {
     }
 
     public UserRestaurant(String password, String email) {
+        this.password = password;
+        this.email = email;
     }
 
     public Long getId() {

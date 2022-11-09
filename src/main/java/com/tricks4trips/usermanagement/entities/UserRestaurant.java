@@ -33,10 +33,6 @@ public class UserRestaurant {
         this.email = email;
     }
 
-    public UserAgency(String password, String email) {
-        this.password = password;
-        this.email = email;
-    }
 
     public Long getId() {
         return id;

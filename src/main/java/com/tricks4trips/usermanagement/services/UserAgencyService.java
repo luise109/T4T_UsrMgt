@@ -66,14 +66,13 @@ public class UserAgencyService {
         return null;
     }
 
-    public UserAgency deleteUser(String password, String email) {
+    public Boolean deleteUser(String password, String email) {
         UserAgency user = userRepository.findByEmailAndPassword(email, password);
         if (user != null) {
             userRepository.delete(user);
-            user = new UserAgency(password, email);
-            return user;
+            return true;
         }
-        return null;
+        return false;
     }
 
 }

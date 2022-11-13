@@ -56,14 +56,13 @@ public class UserService {
         return null;
     }
 
-    public User deleteUser(String email, String password) {
+    public Boolean deleteUser(String email, String password) {
         User user = userRepository.findByEmailAndPassword(email, password);
         if (user != null) {
             userRepository.delete(user);
-            user = new User(password, email);
-            return user;
+            return true;
         }
-        return null;
+        return false;
     }
 
 }

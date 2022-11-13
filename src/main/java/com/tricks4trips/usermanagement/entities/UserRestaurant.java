@@ -1,5 +1,6 @@
 package com.tricks4trips.usermanagement.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,13 +16,20 @@ public class UserRestaurant {
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String rfc;
-    @Column(unique = true)
+    @Column(nullable = false,unique = true)
     private String email;
+    @Column(nullable = false)
+    @JsonIgnore
     private String password;
+    @Column(nullable = false)
     private String phone;
+    @Column(nullable = false)
     private String address;
+    @Column(nullable = false)
     private String zip;
     private String webPage;
 

@@ -2,6 +2,7 @@ package com.tricks4trips.usermanagement.controllers;
 
 import com.tricks4trips.usermanagement.entities.User;
 import com.tricks4trips.usermanagement.services.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,23 +20,58 @@ public class UserController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public User createUser(User user) {
-        return userService.createNewUser(user);
+    public ResponseEntity<?> createUser(User user) {
+        try {
+            User userCreated = userService.createNewUser(user);
+            if (userCreated != null) {
+                return ResponseEntity.ok(userCreated);
+            }else {
+                return ResponseEntity.badRequest().body("No se pudo crear el usuario");
+            }
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("No se pudo crear el usuario");
+        }
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public User login(User user) {
-        return userService.login(user.getEmail(), user.getPassword());
+    public ResponseEntity<?> login(User user) {
+        try {
+            User userLogin = userService.login(user.getEmail(), user.getPassword());
+            if (userLogin != null) {
+                return ResponseEntity.ok(userLogin);
+            } else {
+                return ResponseEntity.badRequest().body("No se pudo iniciar sesión, verifique sus credenciales");
+            }
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("No se pudo iniciar sesión, verifique sus credenciales");
+        }
     }
 
     @RequestMapping(value = "/modify", method = RequestMethod.PUT)
-    public User modifyUser(String pass, String userEmail ,User userModify) {
-        return userService.modifyUser(pass, userEmail, userModify);
+    public ResponseEntity<?> modifyUser(String pass, String userEmail ,User userModify) {
+        try {
+            User user = userService.modifyUser(pass, userEmail, userModify);
+            if (user != null) {
+                return ResponseEntity.ok(user);
+            } else {
+                return ResponseEntity.badRequest().body("No se pudo modificar el usuario");
+            }
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("No se pudo modificar el usuario");
+        }
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public User deleteUser(String email, String password) {
-        return userService.deleteUser(email, password);
+    public ResponseEntity<?> deleteUser(String email, String password) {
+        try {
+            if (userService.deleteUser(email, password)) {
+                return ResponseEntity.ok(true);
+            } else {
+                return ResponseEntity.badRequest().body("No se pudo eliminar el usuario");
+            }
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("No se pudo eliminar el usuario");
+        }
     }
 
 }

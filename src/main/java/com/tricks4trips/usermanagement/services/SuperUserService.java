@@ -53,14 +53,13 @@ public class SuperUserService {
         return null;
     }
 
-    public SuperUser deleteUser(String username, String password) {
+    public Boolean deleteUser(String username, String password) {
         SuperUser user = userRepository.findByUsernameAndPassword(username, password);
         if (user != null) {
             userRepository.delete(user);
-            user = new SuperUser(password, username);
-            return user;
+            return true;
         }
-        return null;
+        return false;
     }
 
 }

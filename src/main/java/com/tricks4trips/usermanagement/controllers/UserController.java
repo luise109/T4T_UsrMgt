@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/user")
@@ -24,7 +25,7 @@ public class UserController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(User user) {
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             User userCreated = userService.createNewUser(user);
             if (userCreated == null) {
@@ -45,7 +46,7 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(User user) {
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             User userLogin = userService.login(user.getEmail(), user.getPassword());
             if (userLogin != null) {
@@ -66,7 +67,7 @@ public class UserController {
 
     @RequestMapping(value = "/modify", method = RequestMethod.PUT)
     public ResponseEntity<?> modifyUser(String pass, String userEmail ,User userModify) {
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             User user = userService.modifyUser(pass, userEmail, userModify);
             if (user != null) {
@@ -87,7 +88,7 @@ public class UserController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(String email, String password) {
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             boolean deleted = userService.deleteUser(email, password);
             if (deleted) {

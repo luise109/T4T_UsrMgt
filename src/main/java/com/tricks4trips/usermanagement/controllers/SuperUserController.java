@@ -21,7 +21,7 @@ public class SuperUserController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(SuperUser user){
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             SuperUser tempUser = userService.createNewUser(user);
             if (tempUser == null) {
@@ -42,7 +42,7 @@ public class SuperUserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(SuperUser user) {
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             SuperUser tempUser = userService.login(user.getUsername(), user.getPassword());
             if (tempUser == null) {
@@ -64,7 +64,7 @@ public class SuperUserController {
 
     @RequestMapping(value = "/modify", method = RequestMethod.PUT)
     public ResponseEntity<?> modifyUser(String pass, String userUsername ,SuperUser userModify) {
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             SuperUser tempUser = userService.modifyUser(pass, userUsername, userModify);
             if (tempUser == null) {
@@ -85,7 +85,7 @@ public class SuperUserController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(String username, String password) {
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             if (userService.deleteUser(username, password)) {
                 map.put("message", "Usuario eliminado correctamente");

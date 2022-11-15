@@ -24,7 +24,7 @@ public class UserAgencyController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(UserAgency user) {
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             UserAgency tempUser = userService.createNewUser(user);
             if (tempUser == null) {
@@ -45,7 +45,7 @@ public class UserAgencyController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(UserAgency user) {
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             UserAgency tempUser = userService.login(user.getEmail(), user.getPassword());
             if (tempUser == null) {
@@ -66,7 +66,7 @@ public class UserAgencyController {
 
     @RequestMapping(value = "/modify", method = RequestMethod.PUT)
     public ResponseEntity<?> modifyUser(String pass, String userEmail ,UserAgency userModify) {
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             UserAgency tempUser = userService.modifyUser(pass, userEmail, userModify);
             if (tempUser == null) {
@@ -87,7 +87,7 @@ public class UserAgencyController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(String password, String email) {
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             boolean tempUser = userService.deleteUser(password, email);
             if (tempUser) {

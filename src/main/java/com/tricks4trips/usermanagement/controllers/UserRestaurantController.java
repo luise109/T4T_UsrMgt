@@ -25,7 +25,7 @@ public class UserRestaurantController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(UserRestaurant user) {
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             UserRestaurant userCreated = userRestaurantService.createNewUser(user);
             if (userCreated == null) {
@@ -46,7 +46,7 @@ public class UserRestaurantController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(UserRestaurant user) {
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             UserRestaurant userLogin = userRestaurantService.login(user.getEmail(), user.getPassword());
             if (userLogin != null) {
@@ -67,7 +67,7 @@ public class UserRestaurantController {
 
     @RequestMapping(value = "/modify", method = RequestMethod.PUT)
     public ResponseEntity<?> modifyUser(String pass, String userEmail, UserRestaurant userModify) {
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             UserRestaurant user = userRestaurantService.modifyUser(pass, userEmail, userModify);
             if (user == null) {
@@ -88,7 +88,7 @@ public class UserRestaurantController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(String password, String email) {
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         try {
             boolean userDeleted = userRestaurantService.deleteUser(password, email);
             if (userDeleted) {

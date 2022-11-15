@@ -11,31 +11,35 @@ public class UserRestaurantService {
 
     @Autowired
     private UserRestaurantRepository userRepository;
+    @Autowired
+    private EncryptPassword encryptPassword;
 
 
 
 
     public UserRestaurant createNewUser(UserRestaurant userRestaurant) {
         if (userRepository.findByEmail(userRestaurant.getEmail()) == null) {
+            userRestaurant.setPassword(encryptPassword.encrypt(userRestaurant.getPassword()));
             return userRepository.save(userRestaurant);
+        } else {
+            return null;
         }
-        return null;
     }
 
     public UserRestaurant login(String email, String password) {
         if (email != null && password != null) {
             UserRestaurant userRestaurant = userRepository.findByEmailAndPassword(email, password);
-            if (userRestaurant == null) {
-                return null;
+            if (userRestaurant != null) {
+                if (encryptPassword.compare(password, userRestaurant.getPassword())) {
+                    return userRestaurant;
+                }
             }
-            userRestaurant.setPassword("");
-            return userRestaurant;
         }
         return null;
     }
 
     public UserRestaurant modifyUser(String password, String email ,UserRestaurant userModify) {
-        UserRestaurant user = userRepository.findByEmailAndPassword(email, password);
+        UserRestaurant user = this.login(email, password);
         if (user != null) {
             userModify.setId(user.getId());
             if(userModify.getName() == null){
@@ -70,7 +74,7 @@ public class UserRestaurantService {
     }
 
     public Boolean deleteUser(String password, String email) {
-        UserRestaurant user = userRepository.findByEmailAndPassword(email, password);
+        UserRestaurant user = this.login(email, password);
         if (user != null) {
             userRepository.delete(user);
             return true;

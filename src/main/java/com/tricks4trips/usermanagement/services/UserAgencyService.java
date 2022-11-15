@@ -10,29 +10,33 @@ public class UserAgencyService {
 
     @Autowired
     private UserAgencyRepository userRepository;
+    @Autowired
+    private EncryptPassword encryptPassword;
 
 
     public UserAgency createNewUser(UserAgency user) {
         if (userRepository.findByEmail(user.getEmail()) == null) {
+            user.setPassword(encryptPassword.encrypt(user.getPassword()));
             return userRepository.save(user);
+        } else {
+            return null;
         }
-        return null;
     }
 
     public UserAgency login(String email, String password) {
         if (email != null && password != null) {
             UserAgency userAgency =  userRepository.findByEmailAndPassword(email, password);
-            if (userAgency == null) {
-                return null;
+            if (userAgency != null) {
+                if (encryptPassword.compare(password, userAgency.getPassword())) {
+                    return userAgency;
+                }
             }
-            userAgency.setPassword("");
-            return userAgency;
         }
         return null;
     }
 
     public UserAgency modifyUser(String password, String email ,UserAgency userModify) {
-        UserAgency user = userRepository.findByEmailAndPassword(email, password);
+        UserAgency user = this.login(email, password);
         if (user != null) {
             userModify.setId(user.getId());
             if(userModify.getName() == null){
@@ -67,7 +71,7 @@ public class UserAgencyService {
     }
 
     public Boolean deleteUser(String password, String email) {
-        UserAgency user = userRepository.findByEmailAndPassword(email, password);
+        UserAgency user = this.login(email, password);
         if (user != null) {
             userRepository.delete(user);
             return true;

@@ -10,28 +10,33 @@ public class SuperUserService {
 
     @Autowired
     private SuperUserRepository userRepository;
+    @Autowired
+    private EncryptPassword encryptPassword;
+
 
     public SuperUser createNewUser(SuperUser user) {
         if (userRepository.findByUsername(user.getUsername()) == null) {
+            user.setPassword(encryptPassword.encrypt(user.getPassword()));
             return userRepository.save(user);
+        } else {
+            return null;
         }
-        return null;
     }
 
-    public SuperUser login(String email, String password) {
-        if (email != null && password != null) {
-            SuperUser superUser = userRepository.findByUsernameAndPassword(email, password);
-            if (superUser == null) {
-                return null;
+    public SuperUser login(String username, String password) {
+        if (username != null && password != null) {
+            SuperUser superUser = userRepository.findByUsername(username);
+            if (superUser != null) {
+                if (encryptPassword.compare(password, superUser.getPassword())) {
+                    return superUser;
+                }
             }
-            superUser.setPassword("");
-            return superUser;
         }
         return null;
     }
 
     public SuperUser modifyUser(String password, String username ,SuperUser userModify) {
-        SuperUser user = userRepository.findByUsernameAndPassword(username, password);
+        SuperUser user = this.login(username, password);
         if (user != null) {
             userModify.setId(user.getId());
             if (userModify.getPassword() == null) {
@@ -54,7 +59,7 @@ public class SuperUserService {
     }
 
     public Boolean deleteUser(String username, String password) {
-        SuperUser user = userRepository.findByUsernameAndPassword(username, password);
+        SuperUser user = this.login(username, password);
         if (user != null) {
             userRepository.delete(user);
             return true;

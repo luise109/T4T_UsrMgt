@@ -10,28 +10,32 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EncryptPassword encryptPassword;
 
 
     public User createNewUser(User user) {
         if (userRepository.findByEmail(user.getEmail()) == null) {
+            user.setPassword(encryptPassword.encrypt(user.getPassword()));
             return userRepository.save(user);
+        } else {
+            return null;
         }
-        return null;
     }
 
     public User login(String email, String password) {
         if (email != null && password != null) {
             User user = userRepository.findByEmailAndPassword(email, password);
-            if (user == null) {
-                return null;
+            if (user != null) {
+                if (encryptPassword.compare(password, user.getPassword())) {
+                    return user;
+                }
             }
-            user.setPassword("");
-            return user;
         }
         return null;
     }
     public User modifyUser(String password, String email ,User userModify) {
-        User user = userRepository.findByEmailAndPassword(email, password);
+        User user = this.login(email, password);
         if (user != null) {
             userModify.setId(user.getId());
             if(userModify.getName() == null){
@@ -57,7 +61,7 @@ public class UserService {
     }
 
     public Boolean deleteUser(String email, String password) {
-        User user = userRepository.findByEmailAndPassword(email, password);
+        User user = this.login(email, password);
         if (user != null) {
             userRepository.delete(user);
             return true;

@@ -25,7 +25,7 @@ public class UserService {
 
     public User login(String email, String password) {
         if (email != null && password != null) {
-            User user = userRepository.findByEmailAndPassword(email, password);
+            User user = userRepository.findByEmail(email);
             if (user != null) {
                 if (encryptPassword.compare(password, user.getPassword())) {
                     return user;

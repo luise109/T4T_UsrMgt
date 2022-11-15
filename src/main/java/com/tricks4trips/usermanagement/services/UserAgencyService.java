@@ -25,7 +25,7 @@ public class UserAgencyService {
 
     public UserAgency login(String email, String password) {
         if (email != null && password != null) {
-            UserAgency userAgency =  userRepository.findByEmailAndPassword(email, password);
+            UserAgency userAgency =  userRepository.findByEmail(email);
             if (userAgency != null) {
                 if (encryptPassword.compare(password, userAgency.getPassword())) {
                     return userAgency;

@@ -28,7 +28,7 @@ public class UserRestaurantService {
 
     public UserRestaurant login(String email, String password) {
         if (email != null && password != null) {
-            UserRestaurant userRestaurant = userRepository.findByEmailAndPassword(email, password);
+            UserRestaurant userRestaurant = userRepository.findByEmail(email);
             if (userRestaurant != null) {
                 if (encryptPassword.compare(password, userRestaurant.getPassword())) {
                     return userRestaurant;

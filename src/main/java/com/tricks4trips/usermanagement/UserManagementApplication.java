@@ -13,5 +13,7 @@ public class UserManagementApplication {
         SpringApplication.run(UserManagementApplication.class, args);
         logger.info("La aplicacion se ha iniciado correctamente");
     }
-
+//spring.datasource.url=jdbc:mysql://database-1.cizpottg01n2.us-east-1.rds.amazonaws.com:3306/usrMgt
+    //spring.datasource.username=admin
+    //spring.datasource.password=password
 }

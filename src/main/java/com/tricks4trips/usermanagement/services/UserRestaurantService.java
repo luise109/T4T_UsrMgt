@@ -1,13 +1,17 @@
 package com.tricks4trips.usermanagement.services;
 
 
+import com.tricks4trips.usermanagement.Impl.UserDetailsImpl;
 import com.tricks4trips.usermanagement.entities.UserRestaurant;
 import com.tricks4trips.usermanagement.repositories.UserRestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserRestaurantService {
+public class UserRestaurantService implements UserDetailsService {
 
     @Autowired
     private UserRestaurantRepository userRepository;
@@ -80,6 +84,14 @@ public class UserRestaurantService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserRestaurant user = userRepository.findOneByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+
+        return new UserDetailsImpl(user);
     }
 
 }

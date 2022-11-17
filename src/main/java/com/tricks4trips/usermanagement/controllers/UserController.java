@@ -3,15 +3,10 @@ package com.tricks4trips.usermanagement.controllers;
 import com.tricks4trips.usermanagement.entities.User;
 import com.tricks4trips.usermanagement.services.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
-
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*", methods = {RequestMethod.DELETE,RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT},allowedHeaders = "*")

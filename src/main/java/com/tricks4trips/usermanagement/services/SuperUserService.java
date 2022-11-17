@@ -1,12 +1,16 @@
 package com.tricks4trips.usermanagement.services;
 
+import com.tricks4trips.usermanagement.Impl.UserDetailsImpl;
 import com.tricks4trips.usermanagement.entities.SuperUser;
 import com.tricks4trips.usermanagement.repositories.SuperUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SuperUserService {
+public class SuperUserService implements UserDetailsService {
 
     @Autowired
     private SuperUserRepository userRepository;
@@ -65,6 +69,13 @@ public class SuperUserService {
             return true;
         }
         return false;
+    }
+
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        SuperUser user = userRepository.findOneByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+
+        return new UserDetailsImpl(user);
     }
 
 }

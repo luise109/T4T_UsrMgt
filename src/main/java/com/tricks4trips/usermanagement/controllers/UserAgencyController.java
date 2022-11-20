@@ -84,10 +84,15 @@ public class UserAgencyController {
                 map.put("code", false);
             } else {
                 if (this.allFieldsAreValid(userModify).equals("true")) {
-                    userService.modifyUser(pass, userEmail, userModify);
-                    map.put("message", "Usuario modificado correctamente");
-                    map.put("code", true);
-                    map.put("user", userModify);
+                    tempUser = userService.modifyUser(pass, userEmail, userModify);
+                    if (tempUser != null) {
+                        map.put("message", "Usuario modificado correctamente");
+                        map.put("code", true);
+                        map.put("user", tempUser);
+                    } else {
+                        map.put("message", "No se pudo modificar el usuario, contraseña incorrecta");
+                        map.put("code", false);
+                    }
                 }
                 else {
                     map.put("message", this.allFieldsAreValid(userModify));

@@ -51,6 +51,8 @@ public class UserAgencyService implements UserDetailsService {
             }
             if(userModify.getPassword() == null){
                 userModify.setPassword(user.getPassword());
+            } else {
+                userModify.setPassword(encryptPassword.encrypt(userModify.getPassword()));
             }
             if(userModify.getPhone() == null){
                 userModify.setPhone(user.getPhone());
@@ -67,7 +69,6 @@ public class UserAgencyService implements UserDetailsService {
             if(userModify.getWebPage() == null){
                 userModify.setWebPage(user.getWebPage());
             }
-            userModify.setPassword(encryptPassword.encrypt(user.getPassword()));
             userRepository.save(userModify);
             return userModify;
         }

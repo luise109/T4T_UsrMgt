@@ -123,13 +123,6 @@ public class UserAgencyController {
         return mather.find();
     }
 
-    private boolean isNameValid(String name) {
-        Pattern pattern = Pattern
-                .compile("^[a-zA-Z ]*$");
-        Matcher mather = pattern.matcher(name);
-        return mather.find();
-    }
-
     private boolean isPhoneValid(String phone) {
         Pattern pattern = Pattern
                 .compile("^[0-9]{10}$");
@@ -144,9 +137,6 @@ public class UserAgencyController {
             }
             if(!this.isPasswordValid(user.getPassword())) {
                 return "Contraseña inválida";
-            }
-            if(!this.isNameValid(user.getName())) {
-                return "Nombre inválido";
             }
             if(!this.isPhoneValid(user.getPhone())) {
                 return "Teléfono inválido";

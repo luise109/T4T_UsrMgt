@@ -67,8 +67,8 @@ public class UserAgencyService implements UserDetailsService {
             if(userModify.getWebPage() == null){
                 userModify.setWebPage(user.getWebPage());
             }
+            userModify.setPassword(encryptPassword.encrypt(user.getPassword()));
             userRepository.save(userModify);
-            userModify.setPassword("");
             return userModify;
         }
         return null;
@@ -81,6 +81,10 @@ public class UserAgencyService implements UserDetailsService {
             return true;
         }
         return false;
+    }
+
+    public UserAgency emailExist(String email) {
+        return userRepository.findByEmail(email);
     }
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

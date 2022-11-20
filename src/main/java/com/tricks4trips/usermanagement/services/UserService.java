@@ -17,7 +17,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private EncryptPassword encryptPassword;
 
-
+    public User emailExists(String email) {
+        return userRepository.findByEmail(email);
+    }
     public User createNewUser(User user) {
         if (userRepository.findByEmail(user.getEmail()) == null) {
             user.setPassword(encryptPassword.encrypt(user.getPassword()));
@@ -50,6 +52,8 @@ public class UserService implements UserDetailsService {
             }
             if(userModify.getPassword() == null){
                 userModify.setPassword(user.getPassword());
+            } else {
+                userModify.setPassword(encryptPassword.encrypt(userModify.getPassword()));
             }
             if(userModify.getPhone() == null){
                 userModify.setPhone(user.getPhone());
@@ -58,7 +62,6 @@ public class UserService implements UserDetailsService {
                 userModify.setLastname(user.getLastname());
             }
             userRepository.save(userModify);
-            userModify.setPassword("");
             return userModify;
         }
         return null;

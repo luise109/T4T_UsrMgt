@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*", methods = {RequestMethod.DELETE,RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT},allowedHeaders = "*")
@@ -22,14 +25,20 @@ public class UserController {
     public ResponseEntity<?> createUser(User user) {
         Map<String,Object> map = new HashMap<>();
         try {
-            User userCreated = userService.createNewUser(user);
-            if (userCreated == null) {
+            User tempUser = userService.emailExists(user.getEmail());
+            if (tempUser != null) {
                 map.put("message", "No se pudo crear el usuario");
                 map.put("code", false);
             } else {
-                map.put("message", "Usuario creado correctamente");
-                map.put("code", true);
-                map.put("user", userCreated);
+                if (this.allFieldsAreValid(user).equals("true")) {
+                    userService.createNewUser(user);
+                    map.put("message", "Usuario creado correctamente");
+                    map.put("code", true);
+                    map.put("user", user);
+                } else {
+                    map.put("message", this.allFieldsAreValid(user));
+                    map.put("code", false);
+                }
             }
             return ResponseEntity.ok(map);
         }catch (Exception e){
@@ -64,11 +73,24 @@ public class UserController {
     public ResponseEntity<?> modifyUser(String pass, String userEmail ,User userModify) {
         Map<String,Object> map = new HashMap<>();
         try {
-            User user = userService.modifyUser(pass, userEmail, userModify);
-            if (user != null) {
-                map.put("message", "Usuario modificado correctamente");
-                map.put("code", true);
-                map.put("user", user);
+            User tempUser = userService.emailExists(userEmail);
+            if (tempUser != null) {
+                if (this.allFieldsAreValid(userModify).equals("true"))
+                {
+                    tempUser = userService.modifyUser(pass, userEmail, userModify);
+                    if (tempUser != null) {
+                        map.put("message", "Usuario modificado correctamente");
+                        map.put("code", true);
+                        map.put("user",tempUser);
+                    }
+                    else {
+                        map.put("message", "No se pudo modificar el usuario");
+                        map.put("code", false);
+                    }
+                } else {
+                    map.put("message", this.allFieldsAreValid(userModify));
+                    map.put("code", false);
+                }
             } else {
                 map.put("message", "No se pudo modificar el usuario");
                 map.put("code", false);
@@ -79,6 +101,58 @@ public class UserController {
             map.put("code", false);
             return ResponseEntity.badRequest().body(map);
         }
+    }
+
+    private boolean isEmailValid(String email) {
+        Pattern pattern = Pattern
+                .compile("^[_A-Za-z0-9+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Matcher mather = pattern.matcher(email);
+        return mather.find();
+    }
+
+    private boolean isPasswordValid(String password) {
+        Pattern pattern = Pattern
+                .compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
+        Matcher mather = pattern.matcher(password);
+        return mather.find();
+    }
+
+    private boolean isNameValid(String name) {
+        Pattern pattern = Pattern
+                .compile("^[a-zA-Z ]*$");
+        Matcher mather = pattern.matcher(name);
+        return !mather.find();
+    }
+
+    private boolean isPhoneValid(String phone) {
+        Pattern pattern = Pattern
+                .compile("^[0-9]{10}$");
+        Matcher mather = pattern.matcher(phone);
+        return mather.find();
+    }
+
+    private String allFieldsAreValid(User user) {
+        try {
+            if(!this.isEmailValid(user.getEmail())) {
+                return "Email inválido";
+            }
+            if(!this.isPasswordValid(user.getPassword())) {
+                return "Contraseña inválida";
+            }
+            if(!this.isPhoneValid(user.getPhone())) {
+                return "Teléfono inválido";
+            }
+            if(this.isNameValid(user.getName())) {
+                return "Nombre inválido";
+            }
+            if(this.isNameValid(user.getLastname())) {
+                return "Apellido inválido";
+            }
+        }catch (Exception e) {
+            return "true";
+        }
+        return "true";
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

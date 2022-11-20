@@ -17,6 +17,10 @@ public class SuperUserService implements UserDetailsService {
     @Autowired
     private EncryptPassword encryptPassword;
 
+    public SuperUser userExist(String email) {
+        return userRepository.findByUsername(email);
+    }
+
 
     public SuperUser createNewUser(SuperUser user) {
         if (userRepository.findByUsername(user.getUsername()) == null) {
@@ -45,6 +49,8 @@ public class SuperUserService implements UserDetailsService {
             userModify.setId(user.getId());
             if (userModify.getPassword() == null) {
                 userModify.setPassword(user.getPassword());
+            } else {
+                userModify.setPassword(encryptPassword.encrypt(userModify.getPassword()));
             }
             if(userModify.getUsername() == null){
                 userModify.setUsername(user.getUsername());
@@ -56,7 +62,6 @@ public class SuperUserService implements UserDetailsService {
                 userModify.setLastname(user.getLastname());
             }
             userRepository.save(userModify);
-            userModify.setPassword("");
             return userModify;
         }
         return null;

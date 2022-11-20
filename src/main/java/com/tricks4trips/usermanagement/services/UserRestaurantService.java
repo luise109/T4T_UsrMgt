@@ -19,7 +19,9 @@ public class UserRestaurantService implements UserDetailsService {
     private EncryptPassword encryptPassword;
 
 
-
+    public UserRestaurant emailExists(String email) {
+        return userRepository.findByEmail(email);
+    }
 
     public UserRestaurant createNewUser(UserRestaurant userRestaurant) {
         if (userRepository.findByEmail(userRestaurant.getEmail()) == null) {
@@ -54,6 +56,8 @@ public class UserRestaurantService implements UserDetailsService {
             }
             if(userModify.getPassword() == null){
                 userModify.setPassword(user.getPassword());
+            } else {
+                userModify.setPassword(encryptPassword.encrypt(userModify.getPassword()));
             }
             if(userModify.getPhone() == null){
                 userModify.setPhone(user.getPhone());
@@ -71,7 +75,6 @@ public class UserRestaurantService implements UserDetailsService {
                 userModify.setWebPage(user.getWebPage());
             }
             userRepository.save(userModify);
-            userModify.setPassword("");
             return userModify;
         }
         return null;

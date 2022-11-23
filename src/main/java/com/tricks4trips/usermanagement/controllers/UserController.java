@@ -175,4 +175,25 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    public ResponseEntity<?> getUserbyEmail(@RequestParam String email) {
+        Map<String,Object> map = new HashMap<>();
+        try {
+            User user = userService.emailExists(email);
+            if(user != null) {
+                map.put("Message", "Usuario");
+                map.put("user", user);
+                map.put("code",true);
+            } else {
+              map.put("Message", "Usuario no encontrado");
+              map.put("code",false);
+            }
+            return ResponseEntity.ok(map);
+        }catch (Exception e) {
+            map.put("Message","Ha ocurrido un error al buscar el usuario");
+            map.put("code", false);
+            return ResponseEntity.badRequest().body(map);
+        }
+    }
+
 }

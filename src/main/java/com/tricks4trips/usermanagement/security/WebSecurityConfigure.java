@@ -27,7 +27,7 @@ public class WebSecurityConfigure {
         filter.setAuthenticationManager(authManager);
         filter.setFilterProcessesUrl("/userAgency/login");
         return http
-                .csrf().disable()
+                .cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/userAgency/create").permitAll()
                 .anyRequest().authenticated()

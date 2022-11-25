@@ -132,17 +132,25 @@ public class UserAgencyController {
 
     private String allFieldsAreValid(UserAgency user) {
         try {
-            if(!this.isEmailValid(user.getEmail())) {
+            if (!this.isEmailValid(user.getEmail())) {
                 return "Email inválido";
             }
+        }catch (Exception e) {
+
+        }
+        try {
             if(!this.isPasswordValid(user.getPassword())) {
                 return "Contraseña inválida";
             }
+        } catch (Exception e) {
+
+        }
+        try {
             if(!this.isPhoneValid(user.getPhone())) {
                 return "Teléfono inválido";
             }
-        }catch (Exception e) {
-            return "true";
+        } catch (Exception e) {
+
         }
         return "true";
     }

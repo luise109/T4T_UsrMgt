@@ -134,23 +134,39 @@ public class UserController {
 
     private String allFieldsAreValid(User user) {
         try {
-            if(!this.isEmailValid(user.getEmail())) {
+            if (!this.isEmailValid(user.getEmail())) {
                 return "Email inválido";
             }
+        }catch (Exception ignored) {
+
+        }
+        try {
             if(!this.isPasswordValid(user.getPassword())) {
                 return "Contraseña inválida";
             }
-            if(!this.isPhoneValid(user.getPhone())) {
-                return "Teléfono inválido";
-            }
-            if(this.isNameValid(user.getName())) {
-                return "Nombre inválido";
-            }
-            if(this.isNameValid(user.getLastname())) {
-                return "Apellido inválido";
-            }
-        }catch (Exception e) {
-            return "true";
+        } catch (Exception ignored) {
+
+        }
+        try {
+                if(!this.isPhoneValid(user.getPhone())) {
+                    return "Teléfono inválido";
+                }
+        }catch (Exception ignored) {
+
+        }
+        try {
+                if(this.isNameValid(user.getName())) {
+                    return "Nombre inválido";
+                }
+        }catch (Exception ignored) {
+
+        }
+        try {
+                if(this.isNameValid(user.getLastname())) {
+                    return "Apellido inválido";
+                }
+        } catch (Exception ignored) {
+
         }
         return "true";
     }

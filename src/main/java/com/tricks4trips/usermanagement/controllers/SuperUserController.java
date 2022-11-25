@@ -122,17 +122,24 @@ public class SuperUserController {
 
     private String allFieldsAreValid(SuperUser user) {
         try {
-            if(!this.isPasswordValid(user.getPassword())) {
+            if (!this.isPasswordValid(user.getPassword())) {
                 return "Contraseña inválida";
             }
+        }catch (Exception ignored) {
+        }
+
+        try {
             if(!this.isNameValid(user.getName())) {
                 return "Nombre inválido";
             }
+        }catch (Exception ignored) {
+        }
+
+        try {
             if(!this.isNameValid(user.getLastname())) {
                 return "Apellido inválido";
             }
-        }catch (Exception e) {
-            return "true";
+        }catch (Exception ignored) {
         }
         return "true";
     }

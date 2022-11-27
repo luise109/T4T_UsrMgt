@@ -1,6 +1,7 @@
 package com.tricks4trips.usermanagement.controllers;
 
 import com.tricks4trips.usermanagement.entities.User;
+import com.tricks4trips.usermanagement.security.TokenUtils;
 import com.tricks4trips.usermanagement.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,11 +52,14 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(User user) {
         Map<String,Object> map = new HashMap<>();
+
         try {
             User userLogin = userService.login(user.getEmail(), user.getPassword());
             if (userLogin != null) {
+                String token = TokenUtils.getJWTToken(userLogin.getEmail());
                 map.put("message", "Sesión iniciada correctamente");
                 map.put("code", true);
+                map.put("token", token);
                 map.put("user", userLogin);
             } else {
                 map.put("message", "No se pudo iniciar sesión, usuario o contraseña incorrectos");
@@ -211,5 +215,7 @@ public class UserController {
             return ResponseEntity.badRequest().body(map);
         }
     }
+
+
 
 }

@@ -49,8 +49,5 @@ public class UserDetailsImpl implements UserDetails {
         return true;
     }
 
-    public String getUser() {
-        return user.getName();
-    }
 
 }

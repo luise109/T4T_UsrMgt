@@ -1,6 +1,7 @@
 package com.tricks4trips.usermanagement.controllers;
 
 import com.tricks4trips.usermanagement.entities.UserAgency;
+import com.tricks4trips.usermanagement.security.TokenUtils;
 import com.tricks4trips.usermanagement.services.UserAgencyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -61,10 +62,13 @@ public class UserAgencyController {
             if (tempUser == null) {
                 map.put("message", "No se pudo iniciar sesión, usuario o contraseña incorrectos");
                 map.put("code", false);
+
             }else {
+                String token = TokenUtils.getJWTToken(user.getEmail());
                 map.put("message", "Sesión iniciada correctamente");
                 map.put("code", true);
                 map.put("user", tempUser);
+                map.put("token", token);
             }
             return ResponseEntity.ok(map);
         }catch (Exception e){
@@ -135,21 +139,21 @@ public class UserAgencyController {
             if (!this.isEmailValid(user.getEmail())) {
                 return "Email inválido";
             }
-        }catch (Exception e) {
+        }catch (Exception ignored) {
 
         }
         try {
             if(!this.isPasswordValid(user.getPassword())) {
                 return "Contraseña inválida";
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         try {
             if(!this.isPhoneValid(user.getPhone())) {
                 return "Teléfono inválido";
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return "true";

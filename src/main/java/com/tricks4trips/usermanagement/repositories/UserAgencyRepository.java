@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface UserAgencyRepository extends CrudRepository<UserAgency, Long> {
     UserAgency findByEmail(String email);
-    UserAgency findByEmailAndPassword(String email, String password);
 
     Optional<UserAgency> findOneByEmail(String username);
 

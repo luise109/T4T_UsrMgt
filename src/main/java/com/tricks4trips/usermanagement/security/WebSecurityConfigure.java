@@ -27,11 +27,11 @@ public class WebSecurityConfigure {
                                     AuthenticationManager authManager) throws Exception {
         JWTAuthenticationFilter filter = new JWTAuthenticationFilter();
         filter.setAuthenticationManager(authManager);
-        filter.setFilterProcessesUrl("/userAgency/login");
         return http
                 .cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/userAgency/create").permitAll()
+                .antMatchers("/userAgency/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

@@ -9,28 +9,28 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class TokenUtils {
 
-    private final static String SECRET = "tricks4trips923874hsdbf82hU9487HHJK908rjlkajsdlkju3y423y487yasjhKGJLSDF897897HSD897F#@$@#^#$%";
-    private final static Long ACCESS_TOKEN_EXPIRATION_TIME = 86400000L; // 1 day
+    private final static String SECRET = "ofmNLF5E0KEVAfnKCh7K8EvN0/CNGJPQTPZc9MFdNe167+UhTW5t0nAimdcHl8CY6gsqY4HZu7Qv\n" +
+            "RGivSzMOow==";
 
 
 
-    public static String generateAccessToken(String email, String name) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("email", email);
-        map.put("name", name);
-        return Jwts.builder()
-                .setSubject(email)
-                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
-                .addClaims(map)
+    public static String getJWTToken(String username) {
+
+        String token = Jwts
+                .builder()
+                .setId("T4TAGENCYJWT")
+                .setSubject(username)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 600000))
                 .signWith(Keys.hmacShaKeyFor(SECRET.getBytes()), SignatureAlgorithm.HS512)
                 .compact();
-    }
 
+        return "Bearer " + token;
+    }
     public static UsernamePasswordAuthenticationToken getAuthentication(String token) {
         try {
             Claims claims = Jwts.parserBuilder()

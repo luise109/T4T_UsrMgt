@@ -32,6 +32,7 @@ public class WebSecurityConfigure {
                 .authorizeRequests()
                 .antMatchers("/userAgency/create").permitAll()
                 .antMatchers("/userAgency/login").permitAll()
+                .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

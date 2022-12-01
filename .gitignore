@@ -5,6 +5,8 @@ target/
 !**/src/test/**/target/
 lib
 userManagement.iml
+/src/main/resources/application.properties
+```
 
 ### STS ###
 .apt_generated

@@ -33,6 +33,7 @@ public class WebSecurityConfigure {
                 .authorizeRequests()
                 .antMatchers("/user/create").permitAll()
                 .antMatchers("/user/login").permitAll()
+                .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
